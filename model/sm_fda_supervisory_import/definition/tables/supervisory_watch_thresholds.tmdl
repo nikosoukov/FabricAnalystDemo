@@ -1,0 +1,99 @@
+/// Internal watch thresholds (illustrative) by institution_type and metric, loaded from the Excel file supervisory_watch_thresholds.xlsx by the Dataflow Gen2 df_fda_watch_thresholds. NOT OSFI regulatory minimums. Not related to other tables; the watch measures look thresholds up by institution_type. The measures apply the thresholds currently loaded to every quarter; effective_from_quarter is kept for audit. SYNTHETIC DATA · for training only · no OSFI data.
+table supervisory_watch_thresholds
+
+	/// Internal CET1 watch threshold (illustrative, not an OSFI minimum) for the single institution_type in context, from supervisory_watch_thresholds. Blank when several institution types are in context.
+	measure 'CET1 Watch Threshold' =
+			VAR _type = SELECTEDVALUE(dim_institution[institution_type])
+			RETURN
+			    CALCULATE(
+			        MAX(supervisory_watch_thresholds[watch_threshold]),
+			        supervisory_watch_thresholds[metric] = "CET1 ratio",
+			        supervisory_watch_thresholds[institution_type] = _type
+			    )
+		formatString: 0.0%
+		displayFolder: Watch
+
+	/// Number of deposit-taking institutions whose CET1 Ratio is below the internal CET1 watch threshold for their institution_type, evaluated institution by institution. Use with one quarter selected (2026 Q3 is the current quarter).
+	measure 'Institutions Below CET1 Watch' =
+			VAR _count =
+			    SUMX(
+			        VALUES(dim_institution[institution_id]),
+			        VAR _ratio = [CET1 Ratio]
+			        VAR _threshold = [CET1 Watch Threshold]
+			        RETURN
+			            IF(NOT ISBLANK(_ratio) && NOT ISBLANK(_threshold) && _ratio < _threshold, 1)
+			    )
+			RETURN
+			    IF(NOT ISEMPTY(fact_capital), COALESCE(_count, 0))
+		formatString: #,0
+		displayFolder: Watch
+
+	/// Internal LICAT total ratio watch threshold (illustrative, not an OSFI minimum) for life insurers, from supervisory_watch_thresholds.
+	measure 'LICAT Watch Threshold' =
+			CALCULATE(
+			    MAX(supervisory_watch_thresholds[watch_threshold]),
+			    supervisory_watch_thresholds[metric] = "LICAT total",
+			    supervisory_watch_thresholds[institution_type] = "Life insurer"
+			)
+		formatString: 0.0%
+		displayFolder: Watch
+
+	/// Number of insurers whose Insurance Capital Ratio is below the internal watch threshold for their type (LICAT total for life insurers, MCT for P&C insurers). Use with one quarter selected.
+	measure 'Insurers Below Capital Watch' =
+			VAR _count =
+			    SUMX(
+			        VALUES(dim_institution[institution_id]),
+			        VAR _type = CALCULATE(SELECTEDVALUE(dim_institution[institution_type]))
+			        VAR _ratio = [Insurance Capital Ratio]
+			        VAR _threshold =
+			            CALCULATE(
+			                MAX(supervisory_watch_thresholds[watch_threshold]),
+			                supervisory_watch_thresholds[metric] IN {"LICAT total", "MCT"},
+			                supervisory_watch_thresholds[institution_type] = _type
+			            )
+			        RETURN
+			            IF(NOT ISBLANK(_ratio) && NOT ISBLANK(_threshold) && _ratio < _threshold, 1)
+			    )
+			RETURN
+			    IF(NOT ISEMPTY(fact_insurance_capital), COALESCE(_count, 0))
+		formatString: #,0
+		displayFolder: Watch
+
+	column institution_type
+		dataType: string
+		summarizeBy: none
+		sourceColumn: institution_type
+
+	/// CET1 ratio, Leverage ratio, LCR, NSFR, LICAT total or MCT.
+	column metric
+		dataType: string
+		summarizeBy: none
+		sourceColumn: metric
+
+	/// Internal watch threshold (illustrative) as a decimal ratio, e.g. 0.115 = 11.5%.
+	column watch_threshold
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: none
+		sourceColumn: watch_threshold
+
+	/// Quarter (YYYYQ) from which the threshold applies, for audit.
+	column effective_from_quarter
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: effective_from_quarter
+
+	/// Excel file the row was loaded from.
+	column source_file
+		dataType: string
+		summarizeBy: none
+		sourceColumn: source_file
+
+	partition supervisory_watch_thresholds = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, "lh_supervisory"),
+				    Data = Source{[Schema = "dbo", Item = "supervisory_watch_thresholds"]}[Data]
+				in
+				    Data

@@ -1,0 +1,97 @@
+/// One row per supervised federally regulated financial institution (40, all fictitious). Use institution_type, sector and peer_group to group results. is_late_filer_2026q3 flags the 10 institutions whose 2026 Q3 return arrived late. SYNTHETIC DATA · for training only · no OSFI data.
+table dim_institution
+
+	/// Number of institutions that filed a return for the quarter(s) in context (capital return for deposit-taking institutions, insurance capital return for insurers).
+	measure 'Institutions Reporting' =
+			VAR _depositTaking = DISTINCTCOUNT(fact_capital[institution_id])
+			VAR _insurers = DISTINCTCOUNT(fact_insurance_capital[institution_id])
+			RETURN
+			    _depositTaking + _insurers
+		formatString: #,0
+		displayFolder: Filing status
+
+	/// Number of institutions expected to file (all supervised institutions in context, 40 in total).
+	measure 'Institutions Expected' = COUNTROWS(dim_institution)
+		formatString: #,0
+		displayFolder: Filing status
+
+	/// Institutions Reporting / Institutions Expected for the quarter in context. 2026 Q3 is 75% until the late filings are landed.
+	measure 'Filing Completeness %' = DIVIDE([Institutions Reporting], [Institutions Expected])
+		formatString: 0.00%
+		displayFolder: Filing status
+
+	/// Surrogate key of the institution.
+	column institution_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: institution_id
+
+	/// Institution code, FI001 to FI040.
+	column institution_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: institution_code
+
+	/// Fictitious institution name, for example Cedarline Bank.
+	column institution_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: institution_name
+
+	/// D-SIB, Other bank, Trust and loan, Life insurer or P&C insurer.
+	column institution_type
+		dataType: string
+		summarizeBy: none
+		sourceColumn: institution_type
+
+	/// Deposit-taking or Insurance.
+	column sector
+		dataType: string
+		summarizeBy: none
+		sourceColumn: sector
+
+	/// Peer group used for rankings, for example D-SIB, Mid-size bank, Large life.
+	column peer_group
+		dataType: string
+		summarizeBy: none
+		sourceColumn: peer_group
+
+	/// Province code of the head office.
+	column head_office_province
+		dataType: string
+		summarizeBy: none
+		sourceColumn: head_office_province
+
+	/// Large, Medium or Small.
+	column size_band
+		dataType: string
+		summarizeBy: none
+		sourceColumn: size_band
+
+	/// Name of the (fictitious) lead supervisor.
+	column supervisory_lead
+		dataType: string
+		summarizeBy: none
+		sourceColumn: supervisory_lead
+
+	/// Supervisory intervention stage: 0 = normal, 1 = early warning, 2 = risk to financial viability or solvency (illustrative).
+	column intervention_stage
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: intervention_stage
+
+	/// True for the 10 institutions whose 2026 Q3 return arrived late.
+	column is_late_filer_2026q3
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: is_late_filer_2026q3
+
+	partition dim_institution = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, "lh_supervisory"),
+				    Data = Source{[Schema = "dbo", Item = "dim_institution"]}[Data]
+				in
+				    Data

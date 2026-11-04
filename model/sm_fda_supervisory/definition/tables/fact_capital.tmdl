@@ -1,0 +1,92 @@
+/// Quarterly capital return of deposit-taking institutions (D-SIB, Other bank, Trust and loan). Stores capital COMPONENTS in CAD millions, not ratios: CET1, Tier 1 and total capital, risk-weighted assets (RWA) and leverage exposure. Use the ratio measures, which divide sums. SYNTHETIC DATA · for training only · no OSFI data.
+table fact_capital
+
+	/// Common Equity Tier 1 ratio = sum of CET1 capital / sum of risk-weighted assets. Deposit-taking institutions only. Aggregates correctly across institutions because components are stored, not ratios.
+	measure 'CET1 Ratio' = DIVIDE(SUM(fact_capital[cet1_capital]), SUM(fact_capital[rwa]))
+		formatString: 0.00%
+		displayFolder: Capital
+
+	/// Tier 1 capital ratio = sum of Tier 1 capital / sum of risk-weighted assets. Deposit-taking institutions only.
+	measure 'Tier 1 Ratio' = DIVIDE(SUM(fact_capital[tier1_capital]), SUM(fact_capital[rwa]))
+		formatString: 0.00%
+		displayFolder: Capital
+
+	/// Total capital ratio = sum of total capital / sum of risk-weighted assets. Deposit-taking institutions only.
+	measure 'Total Capital Ratio' = DIVIDE(SUM(fact_capital[total_capital]), SUM(fact_capital[rwa]))
+		formatString: 0.00%
+		displayFolder: Capital
+
+	/// Leverage ratio = sum of Tier 1 capital / sum of leverage exposure. Deposit-taking institutions only.
+	measure 'Leverage Ratio' = DIVIDE(SUM(fact_capital[tier1_capital]), SUM(fact_capital[leverage_exposure]))
+		formatString: 0.00%
+		displayFolder: Capital
+
+	/// Change in CET1 Ratio versus the previous quarter, in percentage points (for example -0.64 means the ratio fell by 0.64 points). Use with one quarter selected. Blank when either quarter has no filing.
+	measure 'CET1 Ratio QoQ Change (pp)' =
+			VAR _q = MAX(dim_quarter[quarter_index])
+			VAR _current = [CET1 Ratio]
+			VAR _previous =
+			    CALCULATE([CET1 Ratio], REMOVEFILTERS(dim_quarter), dim_quarter[quarter_index] = _q - 1)
+			RETURN
+			    IF(NOT ISBLANK(_current) && NOT ISBLANK(_previous), (_current - _previous) * 100)
+		formatString: +0.00;-0.00;0.00
+		displayFolder: Capital
+
+	column institution_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: institution_id
+
+	column quarter_key
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: quarter_key
+
+	/// Common Equity Tier 1 capital, CAD millions.
+	column cet1_capital
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: cet1_capital
+		displayFolder: Components
+
+	/// Tier 1 capital, CAD millions.
+	column tier1_capital
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: tier1_capital
+		displayFolder: Components
+
+	/// Total capital, CAD millions.
+	column total_capital
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: total_capital
+		displayFolder: Components
+
+	/// Risk-weighted assets, CAD millions.
+	column rwa
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: rwa
+		displayFolder: Components
+
+	/// Leverage ratio exposure measure, CAD millions.
+	column leverage_exposure
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: leverage_exposure
+		displayFolder: Components
+
+	partition fact_capital = entity
+		mode: directLake
+		source
+			entityName: fact_capital
+			schemaName: dbo
+			expressionSource: DatabaseQuery

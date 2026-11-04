@@ -1,0 +1,63 @@
+/// Quarterly liquidity return of deposit-taking institutions, in CAD millions: high-quality liquid assets, 30-day net cash outflows (LCR components) and available/required stable funding (NSFR components). SYNTHETIC DATA · for training only · no OSFI data.
+table fact_liquidity
+
+	/// Liquidity Coverage Ratio = sum of high-quality liquid assets / sum of 30-day net cash outflows. Deposit-taking institutions only.
+	measure LCR = DIVIDE(SUM(fact_liquidity[hqla]), SUM(fact_liquidity[net_cash_outflows_30d]))
+		formatString: 0.00%
+		displayFolder: Liquidity
+
+	/// Net Stable Funding Ratio = sum of available stable funding / sum of required stable funding. Deposit-taking institutions only.
+	measure NSFR = DIVIDE(SUM(fact_liquidity[available_stable_funding]), SUM(fact_liquidity[required_stable_funding]))
+		formatString: 0.00%
+		displayFolder: Liquidity
+
+	column institution_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: institution_id
+
+	column quarter_key
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: quarter_key
+
+	/// High-quality liquid assets, CAD millions (LCR numerator).
+	column hqla
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: hqla
+		displayFolder: Components
+
+	/// Net cash outflows over 30 days, CAD millions (LCR denominator).
+	column net_cash_outflows_30d
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: net_cash_outflows_30d
+		displayFolder: Components
+
+	/// Available stable funding, CAD millions (NSFR numerator).
+	column available_stable_funding
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: available_stable_funding
+		displayFolder: Components
+
+	/// Required stable funding, CAD millions (NSFR denominator).
+	column required_stable_funding
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: required_stable_funding
+		displayFolder: Components
+
+	partition fact_liquidity = entity
+		mode: directLake
+		source
+			entityName: fact_liquidity
+			schemaName: dbo
+			expressionSource: DatabaseQuery

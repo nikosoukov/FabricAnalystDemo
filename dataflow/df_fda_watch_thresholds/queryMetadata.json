@@ -1,0 +1,15 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {},
+  "name": "df_fda_watch_thresholds",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "supervisory_watch_thresholds": {
+      "queryId": "4b7e2c1a-9d3f-4e8a-b6c5-fda000000001",
+      "queryName": "supervisory_watch_thresholds",
+      "loadEnabled": true
+    }
+  },
+  "connections": []
+}

@@ -1,0 +1,32 @@
+/// Canadian provinces and territories (13) used for mortgage exposure, with English and French names and a region. SYNTHETIC DATA · for training only · no OSFI data.
+table dim_province
+
+	/// Two-letter province or territory code, for example ON, BC.
+	column province_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: province_code
+
+	column province_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: province_name
+
+	column province_name_fr
+		dataType: string
+		summarizeBy: none
+		sourceColumn: province_name_fr
+
+	column region
+		dataType: string
+		summarizeBy: none
+		sourceColumn: region
+
+	partition dim_province = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, "lh_supervisory"),
+				    Data = Source{[Schema = "dbo", Item = "dim_province"]}[Data]
+				in
+				    Data

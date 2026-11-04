@@ -1,0 +1,97 @@
+/// Residential mortgage exposure of deposit-taking institutions by quarter, province, loan-to-value band, insured flag, amortization band and channel. One row per mortgage pool (an institution can report several pools with the same attributes). Amounts in CAD millions. Balances are a stock: always filter to one quarter. SYNTHETIC DATA · for training only · no OSFI data.
+table fact_mortgage_exposure
+
+	/// Outstanding residential mortgage balance in CAD millions. A stock: select one quarter.
+	measure 'Mortgage Balance' = SUM(fact_mortgage_exposure[balance])
+		formatString: #,0
+		displayFolder: Mortgages
+
+	/// Share of mortgage balance that is uninsured with loan-to-value above 70% (bands 70-75% and 75-80%).
+	measure 'Uninsured High-LTV Share' =
+			DIVIDE(
+			    CALCULATE(
+			        [Mortgage Balance],
+			        fact_mortgage_exposure[insured_flag] = FALSE(),
+			        fact_mortgage_exposure[ltv_band] IN {"70-75%", "75-80%"}
+			    ),
+			    [Mortgage Balance]
+			)
+		formatString: 0.00%
+		displayFolder: Mortgages
+
+	/// Share of mortgage balance 90 or more days in arrears = sum of arrears_90d_balance / sum of balance.
+	measure 'Arrears 90d Rate' = DIVIDE(SUM(fact_mortgage_exposure[arrears_90d_balance]), SUM(fact_mortgage_exposure[balance]))
+		formatString: 0.00%
+		displayFolder: Mortgages
+
+	column institution_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: institution_id
+
+	column quarter_key
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: quarter_key
+
+	column province_code
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: province_code
+
+	/// Loan-to-value band: <=60%, 60-65%, 65-70%, 70-75%, 75-80%, >80% (insured).
+	column ltv_band
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ltv_band
+
+	/// True if the mortgage is default-insured.
+	column insured_flag
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: insured_flag
+
+	/// Remaining amortization band: <=25y, 25-30y, >30y.
+	column amortization_band
+		dataType: string
+		summarizeBy: none
+		sourceColumn: amortization_band
+
+	/// Origination channel: Branch, Broker or Digital.
+	column channel
+		dataType: string
+		summarizeBy: none
+		sourceColumn: channel
+
+	/// Outstanding balance, CAD millions.
+	column balance
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: balance
+		displayFolder: Components
+
+	/// Number of loans in the pool.
+	column loan_count
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: loan_count
+
+	/// Balance 90 or more days in arrears, CAD millions.
+	column arrears_90d_balance
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: arrears_90d_balance
+		displayFolder: Components
+
+	partition fact_mortgage_exposure = entity
+		mode: directLake
+		source
+			entityName: fact_mortgage_exposure
+			schemaName: dbo
+			expressionSource: DatabaseQuery

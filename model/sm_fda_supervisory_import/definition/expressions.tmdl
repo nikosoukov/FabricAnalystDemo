@@ -1,0 +1,3 @@
+/// Import source: the lh_supervisory SQL analytics endpoint server. Change it with a deployment-pipeline parameter rule.
+/// 01-Deploy-FdaEnvironment.ps1 replaces __SQL_ENDPOINT__ before upload.
+expression SqlEndpoint = "__SQL_ENDPOINT__" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]

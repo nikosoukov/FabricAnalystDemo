@@ -1,0 +1,35 @@
+relationship fact_capital_institution
+	fromColumn: fact_capital.institution_id
+	toColumn: dim_institution.institution_id
+
+relationship fact_liquidity_institution
+	fromColumn: fact_liquidity.institution_id
+	toColumn: dim_institution.institution_id
+
+relationship fact_insurance_capital_institution
+	fromColumn: fact_insurance_capital.institution_id
+	toColumn: dim_institution.institution_id
+
+relationship fact_mortgage_exposure_institution
+	fromColumn: fact_mortgage_exposure.institution_id
+	toColumn: dim_institution.institution_id
+
+relationship fact_capital_quarter
+	fromColumn: fact_capital.quarter_key
+	toColumn: dim_quarter.quarter_key
+
+relationship fact_liquidity_quarter
+	fromColumn: fact_liquidity.quarter_key
+	toColumn: dim_quarter.quarter_key
+
+relationship fact_insurance_capital_quarter
+	fromColumn: fact_insurance_capital.quarter_key
+	toColumn: dim_quarter.quarter_key
+
+relationship fact_mortgage_exposure_quarter
+	fromColumn: fact_mortgage_exposure.quarter_key
+	toColumn: dim_quarter.quarter_key
+
+relationship fact_mortgage_exposure_province
+	fromColumn: fact_mortgage_exposure.province_code
+	toColumn: dim_province.province_code

@@ -1,0 +1,67 @@
+{
+  "name": "FDA Analyst Dark (SYNTHETIC DATA demo)",
+  "dataColors": ["#1FB58F", "#2DD4A7", "#8FE3CB", "#A6A6A6", "#D9D9D9", "#0E7A5F", "#5FD3B3", "#737373", "#F2C14E", "#E15759"],
+  "background": "#000000",
+  "secondaryBackground": "#1A1A1A",
+  "foreground": "#F2F2F2",
+  "foregroundNeutralSecondary": "#BFBFBF",
+  "foregroundNeutralTertiary": "#8C8C8C",
+  "backgroundLight": "#262626",
+  "backgroundNeutral": "#404040",
+  "tableAccent": "#1FB58F",
+  "good": "#2DD4A7",
+  "neutral": "#A6A6A6",
+  "bad": "#FF6B6B",
+  "maximum": "#1FB58F",
+  "center": "#595959",
+  "minimum": "#FF6B6B",
+  "hyperlink": "#2DD4A7",
+  "visitedHyperlink": "#1FB58F",
+  "textClasses": {
+    "title": { "fontFace": "Segoe UI Semibold", "fontSize": 14, "color": "#F2F2F2" },
+    "header": { "fontFace": "Segoe UI Semibold", "fontSize": 12, "color": "#F2F2F2" },
+    "label": { "fontFace": "Segoe UI", "fontSize": 10, "color": "#D9D9D9" },
+    "callout": { "fontFace": "Segoe UI Light", "fontSize": 28, "color": "#2DD4A7" }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "show": true, "color": { "solid": { "color": "#111111" } }, "transparency": 0 }],
+        "border": [{ "show": true, "color": { "solid": { "color": "#333333" } }, "radius": 4 }],
+        "title": [{ "show": true, "fontColor": { "solid": { "color": "#F2F2F2" } }, "fontSize": 12 }],
+        "visualHeader": [{ "background": { "solid": { "color": "#111111" } }, "foreground": { "solid": { "color": "#BFBFBF" } } }]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#000000" } }, "transparency": 0 }],
+        "outspace": [{ "color": { "solid": { "color": "#000000" } } }]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [{ "color": { "solid": { "color": "#2DD4A7" } }, "fontSize": 28 }],
+        "categoryLabels": [{ "color": { "solid": { "color": "#BFBFBF" } } }]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "columnHeaders": [{ "fontColor": { "solid": { "color": "#000000" } }, "backColor": { "solid": { "color": "#1FB58F" } } }],
+        "values": [{ "fontColorPrimary": { "solid": { "color": "#F2F2F2" } }, "backColorPrimary": { "solid": { "color": "#111111" } }, "fontColorSecondary": { "solid": { "color": "#F2F2F2" } }, "backColorSecondary": { "solid": { "color": "#1A1A1A" } } }]
+      }
+    },
+    "pivotTable": {
+      "*": {
+        "columnHeaders": [{ "fontColor": { "solid": { "color": "#000000" } }, "backColor": { "solid": { "color": "#1FB58F" } } }],
+        "rowHeaders": [{ "fontColor": { "solid": { "color": "#F2F2F2" } }, "backColor": { "solid": { "color": "#1A1A1A" } } }],
+        "values": [{ "fontColorPrimary": { "solid": { "color": "#F2F2F2" } }, "backColorPrimary": { "solid": { "color": "#111111" } } }]
+      }
+    },
+    "slicer": {
+      "*": {
+        "items": [{ "fontColor": { "solid": { "color": "#F2F2F2" } }, "background": { "solid": { "color": "#1A1A1A" } } }],
+        "header": [{ "fontColor": { "solid": { "color": "#2DD4A7" } } }]
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+/// Direct Lake source: the lh_supervisory SQL analytics endpoint (server) and the endpoint item id.
+/// 01-Deploy-FdaEnvironment.ps1 replaces __SQL_ENDPOINT__ and __SQL_ENDPOINT_ID__ before upload.
+expression DatabaseQuery =
+		let
+		    database = Sql.Database("__SQL_ENDPOINT__", "__SQL_ENDPOINT_ID__")
+		in
+		    database

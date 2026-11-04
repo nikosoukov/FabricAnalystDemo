@@ -1,0 +1,50 @@
+/// Quarterly capital return of insurers in CAD millions. ratio_basis is 'LICAT total' for life insurers and 'MCT' for P&C insurers. Insurance Capital Ratio = capital_available / capital_required. SYNTHETIC DATA · for training only · no OSFI data.
+table fact_insurance_capital
+
+	/// Insurer capital ratio = sum of capital available / sum of capital required. LICAT total ratio for life insurers, MCT for P&C insurers; do not mix the two bases in one number - group by institution_type or ratio_basis.
+	measure 'Insurance Capital Ratio' = DIVIDE(SUM(fact_insurance_capital[capital_available]), SUM(fact_insurance_capital[capital_required]))
+		formatString: 0.00%
+		displayFolder: Insurance
+
+	column institution_id
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: institution_id
+
+	column quarter_key
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: quarter_key
+
+	/// LICAT total (life insurers) or MCT (P&C insurers).
+	column ratio_basis
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ratio_basis
+
+	/// Capital available, CAD millions.
+	column capital_available
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: capital_available
+		displayFolder: Components
+
+	/// Capital required, CAD millions.
+	column capital_required
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: capital_required
+		displayFolder: Components
+
+	partition fact_insurance_capital = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, "lh_supervisory"),
+				    Data = Source{[Schema = "dbo", Item = "fact_insurance_capital"]}[Data]
+				in
+				    Data

@@ -1,0 +1,461 @@
+{
+  "_banner": "SYNTHETIC DATA · for training only · no OSFI data",
+  "seed": 20261105,
+  "generator_version": "1.0.0",
+  "row_counts": {
+    "dev_initial": {
+      "dim_institution": 40,
+      "dim_quarter": 31,
+      "dim_province": 13,
+      "fact_capital": 677,
+      "fact_liquidity": 677,
+      "fact_insurance_capital": 553,
+      "fact_mortgage_exposure": 1211265,
+      "supervisory_watch_thresholds": 14
+    },
+    "late_filings_landed": {
+      "fact_capital": 5,
+      "fact_liquidity": 5,
+      "fact_insurance_capital": 5,
+      "fact_mortgage_exposure": 7128
+    },
+    "dev_after_landing": {
+      "dim_institution": 40,
+      "dim_quarter": 31,
+      "dim_province": 13,
+      "fact_capital": 682,
+      "fact_liquidity": 682,
+      "fact_insurance_capital": 558,
+      "fact_mortgage_exposure": 1218393,
+      "supervisory_watch_thresholds": 14
+    },
+    "test_initial_scale_0_25": {
+      "dim_institution": 40,
+      "dim_quarter": 31,
+      "dim_province": 13,
+      "fact_capital": 677,
+      "fact_liquidity": 677,
+      "fact_insurance_capital": 553,
+      "fact_mortgage_exposure": 302936,
+      "supervisory_watch_thresholds": 14
+    }
+  },
+  "late_filers": [
+    {
+      "institution_code": "FI002",
+      "institution_name": "Borealis Bank Group",
+      "institution_type": "D-SIB"
+    },
+    {
+      "institution_code": "FI011",
+      "institution_name": "Driftwood Bank",
+      "institution_type": "Other bank"
+    },
+    {
+      "institution_code": "FI013",
+      "institution_name": "Pembrook Bank",
+      "institution_type": "Other bank"
+    },
+    {
+      "institution_code": "FI018",
+      "institution_name": "Old Mill Trust",
+      "institution_type": "Trust and loan"
+    },
+    {
+      "institution_code": "FI022",
+      "institution_name": "Sandstone Mortgage and Loan",
+      "institution_type": "Trust and loan"
+    },
+    {
+      "institution_code": "FI027",
+      "institution_name": "Northwind Life",
+      "institution_type": "Life insurer"
+    },
+    {
+      "institution_code": "FI029",
+      "institution_name": "Tamarack Life",
+      "institution_type": "Life insurer"
+    },
+    {
+      "institution_code": "FI033",
+      "institution_name": "Stormguard Insurance",
+      "institution_type": "P&C insurer"
+    },
+    {
+      "institution_code": "FI038",
+      "institution_name": "Snowfield Insurance",
+      "institution_type": "P&C insurer"
+    },
+    {
+      "institution_code": "FI040",
+      "institution_name": "Timberline Mutual",
+      "institution_type": "P&C insurer"
+    }
+  ],
+  "reporting_2026q3": {
+    "before_landing": {
+      "total": 30,
+      "deposit_taking": 17,
+      "insurers": 13,
+      "filing_completeness_pct": 75.0
+    },
+    "after_landing": {
+      "total": 40,
+      "deposit_taking": 22,
+      "insurers": 18,
+      "filing_completeness_pct": 100.0
+    }
+  },
+  "reporting_2026q2": {
+    "total": 40,
+    "deposit_taking": 22,
+    "insurers": 18,
+    "filing_completeness_pct": 100.0
+  },
+  "cet1_ratio_by_type": {
+    "2026 Q2": {
+      "D-SIB": 0.132761,
+      "Other bank": 0.141287,
+      "Trust and loan": 0.150408
+    },
+    "2026 Q3 before landing": {
+      "D-SIB": 0.129946,
+      "Other bank": 0.141562,
+      "Trust and loan": 0.150552
+    },
+    "2026 Q3 after landing": {
+      "D-SIB": 0.130857,
+      "Other bank": 0.139792,
+      "Trust and loan": 0.149646
+    }
+  },
+  "below_cet1_watch_2026q3": {
+    "before_landing_v1": {
+      "count": 1,
+      "institutions": [
+        "Cedarline Bank 11.38% < 11.5%"
+      ]
+    },
+    "after_landing_v1": {
+      "count": 2,
+      "institutions": [
+        "Driftwood Bank 11.21% < 11.5%",
+        "Cedarline Bank 11.38% < 11.5%"
+      ]
+    },
+    "after_landing_v2": {
+      "count": 4,
+      "institutions": [
+        "Driftwood Bank 11.21% < 12.0%",
+        "Cedarline Bank 11.38% < 12.0%",
+        "Ashgrove Bank 11.78% < 12.0%",
+        "Larchmont Bank 11.91% < 12.0%"
+      ]
+    },
+    "before_landing_v2": {
+      "count": 3,
+      "institutions": [
+        "Cedarline Bank 11.38% < 12.0%",
+        "Ashgrove Bank 11.78% < 12.0%",
+        "Larchmont Bank 11.91% < 12.0%"
+      ]
+    }
+  },
+  "below_cet1_watch_2026q2_v1": {
+    "count": 1,
+    "institutions": [
+      "Cedarline Bank 11.46% < 11.5%"
+    ]
+  },
+  "insurers_below_capital_watch_2026q3": {
+    "before_landing_v1": {
+      "count": 2,
+      "institutions": [
+        "Prairie Crown Life (LICAT total) 117.10% < 120%",
+        "Kettle Lake General (MCT) 176.10% < 180%"
+      ]
+    },
+    "after_landing_v1": {
+      "count": 2,
+      "institutions": [
+        "Prairie Crown Life (LICAT total) 117.10% < 120%",
+        "Kettle Lake General (MCT) 176.10% < 180%"
+      ]
+    },
+    "after_landing_v2": {
+      "count": 4,
+      "institutions": [
+        "Prairie Crown Life (LICAT total) 117.10% < 125%",
+        "Evergreen Mutual Life (LICAT total) 122.20% < 125%",
+        "Summit Peak Life (LICAT total) 123.60% < 125%",
+        "Kettle Lake General (MCT) 176.10% < 180%"
+      ]
+    }
+  },
+  "cedarline_bank": {
+    "code": "FI007",
+    "cet1": {
+      "20254": 0.117525,
+      "20261": 0.1162,
+      "20262": 0.114599,
+      "20263": 0.1138
+    },
+    "threshold_v1": 0.115,
+    "threshold_v2": 0.12
+  },
+  "driftwood_bank": {
+    "code": "FI011",
+    "cet1": {
+      "20261": 0.1268,
+      "20262": 0.126201,
+      "20263": 0.1121
+    }
+  },
+  "lcr_drops_2026q3": [
+    {
+      "institution": "Stonebridge Bank",
+      "type": "D-SIB",
+      "q2": 1.482,
+      "q3": 1.187,
+      "pp": -29.5
+    },
+    {
+      "institution": "Granitecrest Bank",
+      "type": "D-SIB",
+      "q2": 1.603,
+      "q3": 1.5106,
+      "pp": -9.2
+    },
+    {
+      "institution": "Silverpine Bank",
+      "type": "D-SIB",
+      "q2": 1.5106,
+      "q3": 1.4353,
+      "pp": -7.5
+    }
+  ],
+  "lcr_by_type_2026q3_after": {
+    "D-SIB": 1.3613,
+    "Other bank": 1.4147,
+    "Trust and loan": 1.438
+  },
+  "top5_cet1_qoq_drops_q2_q3": {
+    "after_landing": [
+      {
+        "institution": "Driftwood Bank",
+        "type": "Other bank",
+        "q2": 0.126201,
+        "q3": 0.1121,
+        "pp": -1.41
+      },
+      {
+        "institution": "Stonebridge Bank",
+        "type": "D-SIB",
+        "q2": 0.1338,
+        "q3": 0.1274,
+        "pp": -0.64
+      },
+      {
+        "institution": "Riverbend Trust and Loan",
+        "type": "Trust and loan",
+        "q2": 0.145208,
+        "q3": 0.139398,
+        "pp": -0.58
+      },
+      {
+        "institution": "Northgate Trust",
+        "type": "Trust and loan",
+        "q2": 0.162181,
+        "q3": 0.159542,
+        "pp": -0.26
+      },
+      {
+        "institution": "Silverpine Bank",
+        "type": "D-SIB",
+        "q2": 0.129368,
+        "q3": 0.126968,
+        "pp": -0.24
+      }
+    ],
+    "before_landing": [
+      {
+        "institution": "Stonebridge Bank",
+        "type": "D-SIB",
+        "q2": 0.1338,
+        "q3": 0.1274,
+        "pp": -0.64
+      },
+      {
+        "institution": "Riverbend Trust and Loan",
+        "type": "Trust and loan",
+        "q2": 0.145208,
+        "q3": 0.139398,
+        "pp": -0.58
+      },
+      {
+        "institution": "Northgate Trust",
+        "type": "Trust and loan",
+        "q2": 0.162181,
+        "q3": 0.159542,
+        "pp": -0.26
+      },
+      {
+        "institution": "Silverpine Bank",
+        "type": "D-SIB",
+        "q2": 0.129368,
+        "q3": 0.126968,
+        "pp": -0.24
+      },
+      {
+        "institution": "Clearwater Loan Company",
+        "type": "Trust and loan",
+        "q2": 0.148719,
+        "q3": 0.146328,
+        "pp": -0.24
+      }
+    ]
+  },
+  "analyst_outliers_2026q3": {
+    "before_landing": [
+      {
+        "institution": "Stonebridge Bank",
+        "type": "D-SIB",
+        "q2": 0.1338,
+        "q3": 0.1274,
+        "pp": -0.64
+      },
+      {
+        "institution": "Riverbend Trust and Loan",
+        "type": "Trust and loan",
+        "q2": 0.145208,
+        "q3": 0.139398,
+        "pp": -0.58
+      }
+    ],
+    "after_landing": [
+      {
+        "institution": "Driftwood Bank",
+        "type": "Other bank",
+        "q2": 0.126201,
+        "q3": 0.1121,
+        "pp": -1.41
+      },
+      {
+        "institution": "Stonebridge Bank",
+        "type": "D-SIB",
+        "q2": 0.1338,
+        "q3": 0.1274,
+        "pp": -0.64
+      },
+      {
+        "institution": "Riverbend Trust and Loan",
+        "type": "Trust and loan",
+        "q2": 0.145208,
+        "q3": 0.139398,
+        "pp": -0.58
+      }
+    ]
+  },
+  "arrears_90d_rate": {
+    "after_landing": {
+      "ON 20243": 0.001593,
+      "ON 20263": 0.004675,
+      "BC 20243": 0.001741,
+      "BC 20263": 0.004445
+    },
+    "before_landing": {
+      "ON 20263": 0.004674,
+      "BC 20263": 0.004429
+    },
+    "all_provinces_after": {
+      "20243": 0.002153,
+      "20263": 0.003741
+    }
+  },
+  "mortgage": {
+    "dev_2026q2": {
+      "rows": 39303,
+      "balance_cad_m": 994807.6,
+      "arrears_90d_rate": 0.003536,
+      "uninsured_high_ltv_share": 0.278787,
+      "uninsured_high_ltv_share_by_channel": {
+        "Branch": 0.233773,
+        "Broker": 0.353756,
+        "Digital": 0.257184
+      }
+    },
+    "dev_2026q3_before_landing": {
+      "rows": 32175,
+      "balance_cad_m": 839202.2,
+      "arrears_90d_rate": 0.003738,
+      "uninsured_high_ltv_share": 0.277343,
+      "uninsured_high_ltv_share_by_channel": {
+        "Branch": 0.236511,
+        "Broker": 0.347038,
+        "Digital": 0.255602
+      }
+    },
+    "dev_2026q3_after_landing": {
+      "rows": 39303,
+      "balance_cad_m": 1014896.1,
+      "arrears_90d_rate": 0.003741,
+      "uninsured_high_ltv_share": 0.277086,
+      "uninsured_high_ltv_share_by_channel": {
+        "Branch": 0.236079,
+        "Broker": 0.346692,
+        "Digital": 0.255408
+      }
+    },
+    "test_2026q2": {
+      "rows": 9852,
+      "balance_cad_m": 251381.4,
+      "arrears_90d_rate": 0.003553,
+      "uninsured_high_ltv_share": 0.276537,
+      "uninsured_high_ltv_share_by_channel": {
+        "Branch": 0.230818,
+        "Broker": 0.355861,
+        "Digital": 0.248579
+      }
+    },
+    "test_2026q3": {
+      "rows": 8025,
+      "balance_cad_m": 210855.4,
+      "arrears_90d_rate": 0.003768,
+      "uninsured_high_ltv_share": 0.279973,
+      "uninsured_high_ltv_share_by_channel": {
+        "Branch": 0.236387,
+        "Broker": 0.346799,
+        "Digital": 0.270802
+      }
+    },
+    "dev_total_rows_initial": 1211265,
+    "test_total_rows": 302936
+  },
+  "thresholds_v1": {
+    "D-SIB | CET1 ratio": 0.12,
+    "D-SIB | Leverage ratio": 0.04,
+    "D-SIB | LCR": 1.1,
+    "D-SIB | NSFR": 1.05,
+    "Other bank | CET1 ratio": 0.115,
+    "Other bank | Leverage ratio": 0.035,
+    "Other bank | LCR": 1.1,
+    "Other bank | NSFR": 1.05,
+    "Trust and loan | CET1 ratio": 0.115,
+    "Trust and loan | Leverage ratio": 0.035,
+    "Trust and loan | LCR": 1.1,
+    "Trust and loan | NSFR": 1.05,
+    "Life insurer | LICAT total": 1.2,
+    "P&C insurer | MCT": 1.8
+  },
+  "thresholds_v2_changes": {
+    "Other bank | CET1 ratio": [
+      0.115,
+      0.12
+    ],
+    "Life insurer | LICAT total": [
+      1.2,
+      1.25
+    ]
+  },
+  "watchlist_2026q3_rows_after_landing_v1": 2
+}

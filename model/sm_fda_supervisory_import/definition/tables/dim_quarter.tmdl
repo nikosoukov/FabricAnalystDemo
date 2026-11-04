@@ -1,0 +1,54 @@
+/// Reporting quarters from 2019 Q1 to 2026 Q3. quarter_label (for example '2026 Q3') sorts by quarter_key. is_current marks 2026 Q3, the latest quarter. SYNTHETIC DATA · for training only · no OSFI data.
+table dim_quarter
+
+	/// Quarter as an integer YYYYQ, for example 20263.
+	column quarter_key
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: quarter_key
+
+	/// Quarter label, for example 2026 Q3. Sorted by quarter_key.
+	column quarter_label
+		dataType: string
+		summarizeBy: none
+		sourceColumn: quarter_label
+		sortByColumn: quarter_key
+
+	/// Last calendar day of the quarter.
+	column quarter_end_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: quarter_end_date
+
+	column year
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: year
+
+	column quarter_num
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: quarter_num
+
+	/// Sequential quarter number, 1 = 2019 Q1, 31 = 2026 Q3. Used for previous-quarter comparisons.
+	column quarter_index
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: quarter_index
+
+	/// True for 2026 Q3, the latest reporting quarter.
+	column is_current
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: is_current
+
+	partition dim_quarter = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, "lh_supervisory"),
+				    Data = Source{[Schema = "dbo", Item = "dim_quarter"]}[Data]
+				in
+				    Data

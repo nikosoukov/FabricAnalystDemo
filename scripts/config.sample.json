@@ -1,0 +1,11 @@
+{
+  "_readme": "Copy to scripts/config.json and fill in. No secrets belong in this file. SYNTHETIC DATA · for training only · no OSFI data.",
+  "tenantId": "00000000-0000-0000-0000-000000000000",
+  "capacityId": "00000000-0000-0000-0000-000000000000",
+  "presenterUpn": "presenter@contoso.onmicrosoft.com",
+  "devWorkspaceName": "FDA-Analyst-Dev",
+  "testWorkspaceName": "FDA-Analyst-Test",
+  "scaleFactor": 1.0,
+  "testScaleFactor": 0.25,
+  "regionNote": "Use a Fabric F-SKU (F64 recommended; F2+ works; Copilot needs a paid F SKU, not a trial) in Canada Central so the data-residency talking point holds."
+}
